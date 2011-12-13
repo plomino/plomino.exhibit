@@ -18,4 +18,10 @@
     permission="zope.Public"
     allowed_interface="eea.daviz.subtypes.interfaces.IDavizSubtyper"
     />
+
+  <adapter
+    for=".interfaces.IPlominoExhibitJson"
+    provides="eea.daviz.app.interfaces.IDavizConfig"
+    factory=".handler.PlominoDavizConfigure" />
+    
 </configure>

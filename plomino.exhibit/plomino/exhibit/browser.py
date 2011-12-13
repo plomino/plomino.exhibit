@@ -6,7 +6,7 @@ from Products.statusmessages.interfaces import IStatusMessage
 
 from eea.daviz.converter.interfaces import IExhibitJsonConverter
 from eea.daviz.events import DavizEnabledEvent
-from eea.daviz.interfaces import IDavizConfig, IExhibitJson
+from eea.daviz.interfaces import IDavizConfig
 from eea.daviz.subtypes.interfaces import IDavizSubtyper
 
 from zope.component import queryAdapter, queryUtility
@@ -15,6 +15,8 @@ from zope.interface import alsoProvides, noLongerProvides, implements
 
 from Products.CMFPlomino.PlominoUtils import asUnicode, asList
 
+from interfaces import IPlominoExhibitJson
+    
 class PlominoDavizSupport(DavizPublicSupport):
     """ Enable/Disable Exhibit
     """
@@ -35,48 +37,27 @@ class PlominoDavizSupport(DavizPublicSupport):
     def is_exhibit(self):
         """ Is exhibit viewable?
         """
-        return IExhibitJson.providedBy(self.context)
+        return IPlominoExhibitJson.providedBy(self.context)
 
     def enable(self):
         """ Enable Exhibit
         """
-#        try:
-        columns, json = self.extract_data()
-#        except Exception, err:
-#            return self._redirect(('An error occured while trying to convert '
-#                                   'the Plomino view content'), 'view')
+        columns = self.get_columns()
 
-        if not IExhibitJson.providedBy(self.context):
-            alsoProvides(self.context, IExhibitJson)
+        if not IPlominoExhibitJson.providedBy(self.context):
+            alsoProvides(self.context, IPlominoExhibitJson)
 
-        # Update annotations
-        mutator = queryAdapter(self.context, IDavizConfig)
-        mutator.json = json
         notify(DavizEnabledEvent(self.context, columns=columns))
         return self._redirect('Enabled Exhibit view')
 
     def disable(self):
         """ Disable Exhibit
         """
-        noLongerProvides(self.context, IExhibitJson)
+        noLongerProvides(self.context, IPlominoExhibitJson)
         return self._redirect('Removed Exhibit view', to='')
 
-    def extract_data(self):
-        data = []
-
+    def get_columns(self):
         columnids = [col.id for col in self.context.getColumns() if not getattr(col, 'HiddenColumn', False)]
-        for b in self.context.getAllDocuments(getObject=False):
-            row = {'label': b.id}
-            for colid in columnids:
-                v = getattr(b, self.context.getIndexKey(colid), '')
-                if isinstance(v, list):
-                    v = [asUnicode(e).encode('utf-8').replace('\r', '') for e in v]
-                else:
-                    v = asUnicode(v).encode('utf-8').replace('\r', '')
-                row[colid.split('$')[0]] = v or ''
-
-            data.append(row)
-        
         columns = []
         for colid in columnids:
             if '$' in colid:
@@ -84,5 +65,4 @@ class PlominoDavizSupport(DavizPublicSupport):
                 columns.append([id, type])
             else:
                 columns.append([colid, 'text'])
-        return columns, {'items': data,
-                    'properties': dict([[col[0], {"valueType": col[1]}] for col in columns])} 
+        return columns 
