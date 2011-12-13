@@ -25,7 +25,8 @@ setup(name='plomino.exhibit',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          # -*- Extra requirements: -*-
+          'Plomino',
+          'eea.daviz',
       ],
       entry_points="""
       # -*- Entry points: -*-
@@ -33,6 +34,4 @@ setup(name='plomino.exhibit',
       [z3c.autoinclude.plugin]
       target = plone
       """,
-      setup_requires=["PasteScript"],
-      paster_plugins=["ZopeSkel"],
       )
