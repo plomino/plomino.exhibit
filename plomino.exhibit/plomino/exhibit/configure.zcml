@@ -2,18 +2,20 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:i18n="http://namespaces.zope.org/i18n"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="plomino.exhibit">
 
   <five:registerPackage package="." initialize=".initialize" />
 
-  <genericsetup:registerProfile
-      name="default"
-      title="plomino.exhibit"
-      directory="profiles/default"
-      description="Installs the plomino.exhibit package"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
-  <!-- -*- extra stuff goes here -*- -->
+  <class class="Products.CMFPlomino.PlominoView.PlominoView">
+    <implements interface="eea.daviz.interfaces.IPossibleExhibitJson" />
+  </class>
   
+  <browser:page
+    name="daviz_support"
+    for="Products.CMFPlomino.interfaces.IPlominoView"
+    class=".browser.PlominoDavizSupport"
+    permission="zope.Public"
+    allowed_interface="eea.daviz.subtypes.interfaces.IDavizSubtyper"
+    />
 </configure>
