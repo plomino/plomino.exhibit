@@ -5,11 +5,11 @@ plomino.exhibit allows to browse Plomino view data using Exhibit.
  
 Exhibit is Javascript framework providing advanced text search and filtering
 functionalities, with interactive maps, timelines, and other visualizations.
-More information about `Exhibit <http://www.simile-widgets.org/exhibit/>`.
+More information about `Exhibit <http://www.simile-widgets.org/exhibit/>`_.
 
 plomino.exhibit adapts eea.daviz to Plomino, eea.daviz being a Plone
 integration for Exhibit.
-More information about `eea.daviz <http://plone.org/products/eea.daviz>`.
+More information about `eea.daviz <http://plone.org/products/eea.daviz>`_.
 
 Usage
 =====
