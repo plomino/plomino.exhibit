@@ -5,8 +5,8 @@ version = '1.0'
 
 setup(name='plomino.exhibit',
       version=version,
-      description="Exhibit Plomino plugin field",
-      long_description=open("README.txt").read() + "\n" +
+      description="Exhibit/Plomino integration",
+      long_description=open("README.rst").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from
       # http://pypi.python.org/pypi?:action=list_classifiers
@@ -14,10 +14,10 @@ setup(name='plomino.exhibit',
         "Framework :: Plone",
         "Programming Language :: Python",
         ],
-      keywords='',
-      author='',
-      author_email='',
-      url='http://svn.plone.org/svn/collective/',
+      keywords='Plomino,exhibit,eea.daviz',
+      author='Eric BREHAULT',
+      author_email='eric.brehault@makina-corpus.org',
+      url='https://github.com/plomino/plomino.exhibit',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['plomino'],
