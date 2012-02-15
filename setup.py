@@ -25,7 +25,7 @@ setup(name='plomino.exhibit',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'Products.CMFPlomino',
+          'Plomino',
           'eea.daviz',
       ],
       entry_points="""
